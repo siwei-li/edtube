@@ -28,18 +28,20 @@ Vue.use(Auth0Plugin, {
 
 //===============ElementUI===========
 // import { Button, Select } from 'element-ui';
-import '../EleUI/theme/index.css'
-import ElementUI from 'element-ui'
-
-import lang from 'element-ui/lib/locale/lang/en'
-import locale from 'element-ui/lib/locale'
-import './plugins/element.js'
-
-locale.use(lang)
-
 // Vue.component(Button.name, Button);
 // Vue.component(Select.name, Select);
-Vue.use(ElementUI)
+
+import ElementUI from 'element-ui'
+// import 'element-ui/lib/theme-chalk/index.css';
+import '@/assets/et_theme/theme/index.css'
+
+// import lang from 'element-ui/lib/locale/lang/en'
+import locale from 'element-ui/lib/locale/lang/en'
+// import './plugins/element.js'
+// locale.use(lang)
+
+
+Vue.use(ElementUI, { locale ,size: 'large', zIndex: 3000 })
 
 
 //===================================

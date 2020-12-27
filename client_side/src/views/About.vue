@@ -25,8 +25,10 @@ export default {
       console.log(token)
 
       // Use Axios to make a call to the API
-      const { data } = await axios.get('/api/private', {  
+      const { data } = await axios.get('/api/private', {
         headers: {
+          // 'Access-Control-Allow-Origin': '*',
+          // 'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`    // send the access token through the 'Authorization' header
         }
       });

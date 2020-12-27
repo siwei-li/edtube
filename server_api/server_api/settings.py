@@ -1,6 +1,7 @@
 from pathlib import Path
 
 import environ
+
 env = environ.Env(
     # set casting, default value
     DEBUG=(bool, False)
@@ -25,20 +26,14 @@ SECRET_KEY = env('SECRET_KEY')
 # DEBUG = True
 DEBUG = env('DEBUG')
 
-
+# AUTH_USER_MODEL = 'usr_auth0.User'
+# =========================================
 ALLOWED_HOSTS = []
 
 # Application definition
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-    ),
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
-    ),
-}
+# SESSION_ENGINE='utils.auth.django_jwt_cookie'
+# JWT_USER_FIELDS= ['email', 'slug']
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -48,10 +43,22 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'usr_auth0',
+    'social_django',
     'rest_framework',
     'rest_framework_jwt',
     'corsheaders',
 ]
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+
+    ),
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -64,11 +71,13 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
+    # 'utils.auth.django_jwt_cookie.jwt_session_middleware'
 ]
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'django.contrib.auth.backends.RemoteUserBackend',
+    # 'utils.auth.BaseOAuth.Auth0',
 ]
 
 ROOT_URLCONF = 'server_api.urls'
@@ -124,6 +133,24 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# =================???SOCIAL_AUTH======================================
+
+# LOGIN_URL = '/login/auth0'
+# LOGIN_REDIRECT_URL = '/api/private'
+# LOGOUT_REDIRECT_URL = '/api/public'
+#
+# SOCIAL_AUTH_TRAILING_SLASH = False  # Remove trailing slash from routes
+# SOCIAL_AUTH_AUTH0_DOMAIN = 'edtube.us.auth0.com'
+# SOCIAL_AUTH_AUTH0_KEY = env.str('SOCIAL_AUTH_AUTH0_KEY')
+# SOCIAL_AUTH_AUTH0_SECRET = env.str('SOCIAL_AUTH_AUTH0_SECRET')
+#
+# SOCIAL_AUTH_AUTH0_SCOPE = [
+#     'openid',
+#     'profile',
+#     'email'
+# ]
+
+# ======================================================
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
@@ -142,6 +169,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# ===============AUTH0============================
 AUTH0_DOMAIN = 'edtube.us.auth0.com'
 API_IDENTIFIER = 'https://edtube'
 PUBLIC_KEY = None
@@ -158,8 +186,10 @@ JWT_ISSUER = 'https://edtube.us.auth0.com/'
 JWT_AUTH = {
     'JWT_PAYLOAD_GET_USERNAME_HANDLER':
         'utils.auth.utils.jwt_get_username_from_payload_handler',
+        # 'utils.auth.BaseOAuth.jwt_get_username_from_payload_handler',
     'JWT_DECODE_HANDLER':
         'utils.auth.utils.jwt_decode_token',
+        # 'utils.auth.BaseOAuth.jwt_decode_token',
     'JWT_PUBLIC_KEY': PUBLIC_KEY,
     'JWT_ALGORITHM': 'RS256',
     'JWT_AUDIENCE': API_IDENTIFIER,
@@ -168,8 +198,8 @@ JWT_AUTH = {
 }
 
 CORS_ORIGIN_WHITELIST = (
-    'https://localhost:8080',
+    'http://localhost:8080',
 )
-CORS_ALLOW_HEADERS = ['Authorization',]
+CORS_ALLOW_HEADERS = ['Authorization', ]
 
-SECURE_SSL_REDIRECT             = False
+SECURE_SSL_REDIRECT = False
