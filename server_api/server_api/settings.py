@@ -1,6 +1,9 @@
+import os
 from pathlib import Path
 
 import environ
+from pythonjsonlogger import jsonlogger
+
 env = environ.Env(
     # set casting, default value
     DEBUG=(bool, False)
@@ -25,7 +28,6 @@ SECRET_KEY = env('SECRET_KEY')
 # DEBUG = True
 DEBUG = env('DEBUG')
 
-
 ALLOWED_HOSTS = []
 
 # Application definition
@@ -38,6 +40,8 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
     ),
+    'EXCEPTION_HANDLER': 'requestlogs.views.exception_handler',
+
 }
 
 INSTALLED_APPS = [
@@ -64,6 +68,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'requestlogs.middleware.RequestLogsMiddleware',
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -88,6 +93,47 @@ TEMPLATES = [
         },
     },
 ]
+
+# import logging
+# from django.utils.timezone import now
+# class CustomisedJSONFormatter(jsonlogger.JsonFormatter):
+#     def json_record(self, message: str, extra: dict, record: logging.LogRecord):
+#         extra['name'] = record.name
+#         extra['filename'] = record.filename
+#         extra['funcName'] = record.funcName
+#         extra['msecs'] = record.msecs
+#         if record.exc_info:
+#             extra['exc_info'] = self.formatException(record.exc_info)
+#
+#         return {
+#             'message': message,
+#             'timestamp': now(),
+#             'level': record.levelname,
+#             'context': extra
+#         }
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'requestlogs_to_file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': 'logs/requestlogs.log',
+            'formatter':'json_formatted'
+        },
+    },
+    'loggers': {
+        'requestlogs': {
+            'handlers': ['requestlogs_to_file'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+    },
+    'formatters': {
+        'json_formatted': {'()':jsonlogger.JsonFormatter},
+    },
+}
 
 WSGI_APPLICATION = 'server_api.wsgi.application'
 
@@ -142,6 +188,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+#===================AUTH0=============================
 AUTH0_DOMAIN = 'edtube.us.auth0.com'
 API_IDENTIFIER = 'https://edtube'
 PUBLIC_KEY = None
@@ -170,6 +217,6 @@ JWT_AUTH = {
 CORS_ORIGIN_WHITELIST = (
     'https://localhost:8080',
 )
-CORS_ALLOW_HEADERS = ['Authorization',]
+CORS_ALLOW_HEADERS = ['Authorization', ]
 
-SECURE_SSL_REDIRECT             = False
+SECURE_SSL_REDIRECT = False
