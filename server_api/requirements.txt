@@ -1,0 +1,10 @@
+pyjwt~=1.7.1
+requests~=2.25.1
+django~=3.1.4
+djangorestframework~=3.12.2
+djangorestframework-jwt==1.11.0
+django-cors-headers==3.6.0
+django-environ==0.4.5
+django-requestlogs==0.2.1
+python-jose==3.2.0
+python-json-logger==2.0.1

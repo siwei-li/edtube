@@ -1,6 +1,6 @@
 # EdTube
 
-> A Vue.js + Django project of video platform
+> A Vue.js + Django video platform
 
 ![logo_200x200](https://i.loli.net/2020/12/23/jUCBcufs2H4bgZY.png)
 
@@ -29,7 +29,9 @@ npm run e2e
 npm test
 ```
 
----
+
+
+## Tech Stack
 
 选择了 VueJS 的前端渲染，放弃了 Django 的后端模板引擎渲染，业务逻辑放到了前端，放弃了 Django 的 View。
 
@@ -43,17 +45,15 @@ M(Django) + C(Django) + MVVM (VueJS) = M + MVVM + C = MMVVMC
 
 
 
-client_side文件夹，server_api文件夹：前者是vue单页面应用项目，它提供一个入口页面，页面中有一系列取数和数据组织逻辑。后者是一个Django项目，它管理数据库和api行为。
-
-除了一个url指向返回入口页面的视图，其它url都指向api视图。
+项目组织包括client_side文件夹和server_api文件夹：前者是vue单页面应用项目，它提供一个入口页面，页面中有一系列取数和数据组织逻辑。后者是一个Django项目，它管理数据库和api行为。
 
 
 
-Axios to send AJAX requests to the Django backend
-
----
-
-#### Auth0
+Axios to send AJAX requests to the Django backend.
 
 
+
+## Auth0 Authentication
+
+Uses Auth0 to implement user authentivation.
 

@@ -2,8 +2,8 @@
 <div>
     <div v-if="!$auth.loading">
       <!-- show login when not authenticated -->
-      <button v-if="!$auth.isAuthenticated" @click="login">Log in</button>      
-      <button v-if="!$auth.isAuthenticated" @click="signup">Sign Up</button>
+      <el-button v-if="!$auth.isAuthenticated" @click="login">Log in</el-button>
+      <el-button v-if="!$auth.isAuthenticated" @click="signup">Sign Up</el-button>
       <!-- show logout when authenticated -->
       <div v-if="$auth.isAuthenticated"> 
         Welcome, {{$auth.user.name}}!

@@ -28,7 +28,7 @@ SECRET_KEY = env('SECRET_KEY')
 # DEBUG = True
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.52.20']
 
 # Application definition
 REST_FRAMEWORK = {
@@ -112,6 +112,7 @@ TEMPLATES = [
 #             'context': extra
 #         }
 
+LOG_ROOT = os.path.join(BASE_DIR, 'logs')
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -120,7 +121,8 @@ LOGGING = {
             'level': 'INFO',
             'class': 'logging.FileHandler',
             'filename': 'logs/requestlogs.log',
-            'formatter':'json_formatted'
+            # 'filename': os.path.join(LOG_ROOT, 'requestlogs.log'),
+            'formatter': 'json_formatted'
         },
     },
     'loggers': {
