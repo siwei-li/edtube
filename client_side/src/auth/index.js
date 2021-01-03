@@ -64,9 +64,6 @@ export const useAuth0 = ({
       loginWithRedirect(o) {
         return this.auth0Client.loginWithRedirect(o);
       },
-      loginWithPopup(o) {
-        return this.auth0Client.loginWithPopup(o);
-      },
       /** Returns all the claims present in the ID token */
       getIdTokenClaims(o) {
         return this.auth0Client.getIdTokenClaims(o);
@@ -94,7 +91,8 @@ export const useAuth0 = ({
         // audience: options.audience,
         client_id: options.clientId,
         redirect_uri: redirectUri,
-        useRefreshTokens: true
+        useRefreshTokens: true,
+        cacheLocation: 'localstorage'
       });
 
       try {

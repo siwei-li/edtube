@@ -32,7 +32,12 @@ export default {
       });
 
       this.apiMessage = data;
-      console.log("API called and fetched.");
+      // console.log("API called and fetched.");
+
+    // catch (e) {
+    //     console.log(e);
+    //     this.apiMessage = `Error: the server responded with '${e.response.status}: ${e.response.statusText}'`;
+    //   }
     }
   }
 // promise

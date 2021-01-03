@@ -3,7 +3,7 @@
     <div v-if="!$auth.loading">
       <!-- show login when not authenticated -->
       <el-button v-if="!$auth.isAuthenticated" @click="login">Log in</el-button>
-      <el-button v-if="!$auth.isAuthenticated" @click="signup">Sign Up</el-button>
+      <el-button type="primary" v-if="!$auth.isAuthenticated" @click="signup">Sign Up</el-button>
       <!-- show logout when authenticated -->
       <div v-if="$auth.isAuthenticated"> 
         Welcome, {{$auth.user.name}}!
@@ -16,6 +16,9 @@
 <script>
 export default {
   name: "User",
+  created: function() {
+
+  },
   methods:{
         // Log the user in
     login() {
