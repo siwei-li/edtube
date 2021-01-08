@@ -28,7 +28,7 @@ SECRET_KEY = env('SECRET_KEY')
 # DEBUG = True
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['192.168.52.20']
+ALLOWED_HOSTS = ['192.168.52.20','127.0.0.1']
 
 # Application definition
 REST_FRAMEWORK = {

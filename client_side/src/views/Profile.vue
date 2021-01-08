@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <img :src="$auth.user.picture">
+      <img :src="this.$auth.user.picture">
       <h2>{{ $auth.user.nickname }}</h2>
       <p>{{ $auth.user.email }}</p>
     </div>
@@ -17,8 +17,8 @@
         :show-file-list="false"
         :on-success="handleAvatarSuccess"
         :before-upload="beforeAvatarUpload">
-      <img v-if="imageUrl" :src="imageUrl" class="avatar">
-      <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+      <img :src="imageUrl" class="avatar">
+      <i class="el-icon-plus avatar-uploader-icon"></i>
     </el-upload>
 
     <div class="el-upload__tip" slot="tip">Only jpg/png files not exceeding 2MB allowed.</div>
@@ -27,7 +27,7 @@
   </div>
 </template>
 
-<style>
+<style scoped>
 .avatar-uploader .el-upload {
   border: 1px dashed #d9d9d9;
   border-radius: 6px;
@@ -39,16 +39,21 @@
   border-color: #409EFF;
 }
 .avatar-uploader-icon {
-  font-size: 28px;
-  color: #8c939d;
-  width: 178px;
-  height: 178px;
-  line-height: 178px;
-  text-align: center;
+  font-size: 30px;
+  color: black;
+  /*color: #8c939d;*/
+  /*width: 120px;*/
+  /*height: 120px;*/
+  /*line-height: 60px;*/
+  /*text-align: center;*/
+  /*vertical-align:middle;*/
+  position: absolute;
+  top: 45px;
+  left:45px;
 }
 .avatar {
-  width: 178px;
-  height: 178px;
+  width: 120px;
+  height: 120px;
   display: block;
 }
 </style>
@@ -59,7 +64,7 @@ import axios from "axios";
 export default {
   data() {
     return {
-      imageUrl: '',
+      imageUrl: this.$auth.user.picture,
       apiMessage:''
     };
   },

@@ -70,6 +70,11 @@ export const useAuth0 = ({
       },
       /** Returns the access token. If the token is invalid or missing, a new one is retrieved */
       getTokenSilently(o) {
+        // const getToken = async function () {
+        //   const token = await this.auth0Client.getTokenSilently(o);
+        //   this.$store.commit("storeToken", token);
+        //   return token;
+        // }
         return this.auth0Client.getTokenSilently(o);
       },
       /** Gets the access token using a popup window */

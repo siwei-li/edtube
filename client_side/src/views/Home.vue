@@ -2,7 +2,9 @@
 <div class="home">
 
   <Layout>
-    <VideoList></VideoList>
+    <div class="list-wrapper">
+    <VideoList listTitle="Featured"></VideoList>
+    </div>
   </Layout>
 
 </div>
@@ -10,11 +12,12 @@
 
 <script>
 import Layout from '@/views/Layout.vue'
-import VideoList from '@/components/VideoList.vue'
+import VideoList from '@/components/video/VideoList.vue'
 
 
 export default {
   name: 'Home',
+
   components: {
     Layout,
     VideoList
@@ -24,3 +27,9 @@ export default {
   }
 }
 </script>
+
+<style>
+.list-wrapper {
+  padding-left: 5px;
+}
+</style>

@@ -51,12 +51,17 @@ def requires_scope(required_scope):
 
 
 def requires_permission(required_permission):
+    """Determines if the required permission is present in the Access Token
+    Args:
+        required_permission (str): The permission required to access the resource
+    """
+
     def require_permission(f):
         @wraps(f)
         def decorated(*args, **kwargs):
             token = get_token_auth_header(args[0])
             decoded = jwt.decode(token, verify=False)
-            if decoded.get("permissions"):
+            if decoded.get("permission"):
                 token_permissions = decoded["permission"]
                 for token_permission in token_permissions:
                     if token_permission == required_permission:
@@ -67,7 +72,7 @@ def requires_permission(required_permission):
 
         return decorated
 
-    return required_permission
+    return require_permission
 
 
 @api_view(['PUT'])
@@ -119,5 +124,6 @@ def private(request):
 
 @api_view(['GET'])
 @requires_permission('read:messages')
+# @requires_scope('read:messages')
 def private_scoped(request):
     return JsonResponse({'message': 'Hello from a private endpoint! You need to be authenticated and have a scope of read:messages to see this.'})

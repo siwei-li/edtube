@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="header">
     <el-row type="flex" class="row-bg" justify="space-between">
 
       <div class="togl">
@@ -7,26 +7,13 @@
       </div>
 
       <div class="Search">
-        <Search/>
+        Search
       </div>
-
-
-<!--      <div class="grid-content">-->
-<!--        <el-dropdown>-->
-<!--          <i class="el-icon-s-tools" style="margin-right: 15px"></i>-->
-<!--          <el-dropdown-menu slot="dropdown">-->
-<!--            <el-dropdown-item>查看</el-dropdown-item>-->
-<!--            <el-dropdown-item>新增</el-dropdown-item>-->
-<!--            <el-dropdown-item>删除</el-dropdown-item>-->
-<!--          </el-dropdown-menu>-->
-<!--        </el-dropdown>-->
-<!--      </div>-->
 
 
       <div class="user">
         <User/>
       </div>
-
 
     </el-row>
   </div>

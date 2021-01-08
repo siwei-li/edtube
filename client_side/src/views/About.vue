@@ -2,14 +2,15 @@
   <div class="about">
     <h1>This is an about page</h1>
     <div v-if="!$auth.loading">
-    <button @click="callApi">Call API</button>
+    <button @click="testApi">Call API</button>
     </div>
     <p>{{ apiMessage }}</p>
   </div> 
 </template>
 
 <script>
-import axios from "axios";
+// import axios from "axios";
+import {test} from "@/services/ProfileService";
 
 export default {
   name: "About",
@@ -19,25 +20,20 @@ export default {
     };
   },
   methods: {
+    async testApi() {
+      test().then(res=>console.log(res));
+    },
     async callApi() {
       // Get the access token from the auth wrapper
       const token = await this.$auth.getTokenSilently();
       console.log(token)
 
-      // Use Axios to make a call to the API
-      const { data } = await axios.get('/api/private', {  
+      const { data } = await axios.get('/private', {  
         headers: {
-          Authorization: `Bearer ${token}`    // send the access token through the 'Authorization' header
+          Authorization: `Bearer ${token}`
         }
       });
-
       this.apiMessage = data;
-      // console.log("API called and fetched.");
-
-    // catch (e) {
-    //     console.log(e);
-    //     this.apiMessage = `Error: the server responded with '${e.response.status}: ${e.response.statusText}'`;
-    //   }
     }
   }
 // promise

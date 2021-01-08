@@ -4,7 +4,6 @@ axios.defaults.baseURL = '/api'
 axios.defaults.headers['Content-Type'] = 'Access-Control-Allow-Origin'
 
 const getToken = async function () {
-    // Get the access token from the auth wrapper
     const token = await this.$auth.getTokenSilently();
     return token;
 }
@@ -16,7 +15,6 @@ axios.interceptors.request.use(
                     config.headers.Authorization = `Bearer ${token}`;
                 }
             ).catch(err => {
-                // handle errors here
                 console.log(err);
             });
         }
@@ -28,30 +26,30 @@ axios.interceptors.request.use(
         return Promise.reject(error)
     })
 
-axios.interceptors.response.use(
-    response => {
-        //If the returned status code is 200, the interface request is successful and the data can be obtained normally.
-        //Otherwise, an error will be thrown.
-        if (response.status === 200) {
-            if (response.data.code === 511) {
-                //Unauthorized access to authorized interface
-            } else if (response.data.code === 510) {
-                //No login to jump to login page
-            } else {
-                return Promise.resolve(response)
-            }
-        } else {
-            return Promise.reject(response)
-        }
-    }, error => {
-        //We can handle the abnormal state uniformly here
-        if (error.response.status) {
-            //Failure to process request
-            //Corresponding processing for different return codes
-            return Promise.reject(error.response)
-        }
-    }
-);
+// axios.interceptors.response.use(
+//     response => {
+//         //If the returned status code is 200, the interface request is successful and the data can be obtained normally.
+//         //Otherwise, an error will be thrown.
+//         if (response.status === 200) {
+//             if (response.data.code === 511) {
+//                 //Unauthorized access to authorized interface
+//             } else if (response.data.code === 510) {
+//                 //No login to jump to login page
+//             } else {
+//                 return Promise.resolve(response)
+//             }
+//         } else {
+//             return Promise.reject(response)
+//         }
+//     }, error => {
+//         // if (error.response.status) {
+//         if (error.response) {
+//             //Failure to process request
+//             //Corresponding processing for different return codes
+//             return Promise.reject(error.response)
+//         }
+//     }
+// );
 
 //Get request
 export function httpGet({
@@ -62,6 +60,7 @@ export function httpGet({
         axios.get(url, {
             params
         }).then((res) => {
+            // resolve(res)
             resolve(res.data)
         }).catch(err => {
             reject(err)

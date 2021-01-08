@@ -1,11 +1,11 @@
 import { httpGet, httpPost, patch, put } from './http-client'
 
-export const getbook = (params = {}) => httpGet({ url: '/book', params })
+export const test = (params = {}) => httpGet({ url: '/private', params })
 
 
 
 
-// import { getbook } from '@/assets/callapi/api-caller'
+// import { getbook } from '@/services/api-caller'
 // getbook({ id: 200 }).then(res => {
 //     console.log(res)
 // })

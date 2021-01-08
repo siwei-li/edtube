@@ -130,3 +130,4 @@ dmypy.json
 
 .idea/
 mess/
+client_side/vue.config.js

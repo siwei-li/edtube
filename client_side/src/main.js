@@ -37,8 +37,10 @@ import lang from 'element-ui/lib/locale/lang/en'
 import locale from 'element-ui/lib/locale'
 locale.use(lang)
 import './assets/theme/index.css'
+import 'element-ui/lib/theme-chalk/display.css';
 
 import {
+  Avatar,
   Pagination,
   Dialog,
   Autocomplete,
@@ -118,6 +120,7 @@ import {
   Notification
 } from 'element-ui';
 
+Vue.use(Avatar);
 Vue.use(Pagination);
 Vue.use(Dialog);
 Vue.use(Autocomplete);
@@ -194,12 +197,17 @@ Vue.use(CascaderPanel);
 
 Vue.use(Loading.directive);
 
+import infiniteScroll from "vue-infinite-scroll";
+Vue.use(infiniteScroll);
+
 
 //===================================
 Vue.config.productionTip = false;
 
-new Vue({
+const myApp = new Vue({
   router,
   store,
   render: h => h(App)
-}).$mount('#app')
+}).$mount('#app');
+
+export default myApp;

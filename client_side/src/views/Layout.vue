@@ -52,6 +52,7 @@ export default {
   /*background: grey !important;*/
   left: 0;
   margin-top: 60px;
+  z-index: 998;
 }
 
 .el-header-home {
@@ -64,12 +65,14 @@ export default {
   left: 0;
   right: 0;
   box-shadow: 0 2px 4px rgba(0, 0, 0, .3);
+  z-index: 999;
 }
 
 .main-container-home {
   margin-top: 60px;
-  margin-left: 90px;
-  margin-right: 20px;
-  background-color: #5f9cf2;
+  /*margin-left: 90px;*/
+  /*margin-right: 20px;*/
+  margin-left: 60px;
+  /*background-color: #5f9cf2;*/
 }
 </style>
