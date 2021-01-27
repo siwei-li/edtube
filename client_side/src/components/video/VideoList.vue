@@ -74,7 +74,7 @@ export default {
 
 <style scoped>
 .list-title {
-  margin-top: -15px;
+  /*margin-top: -15px;*/
   margin-left: 5px;
 }
 </style>

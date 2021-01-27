@@ -43,6 +43,7 @@ import {
   Avatar,
   Pagination,
   Dialog,
+  Drawer,
   Autocomplete,
   Dropdown,
   DropdownMenu,
@@ -121,6 +122,7 @@ import {
 } from 'element-ui';
 
 Vue.use(Avatar);
+Vue.use(Drawer);
 Vue.use(Pagination);
 Vue.use(Dialog);
 Vue.use(Autocomplete);

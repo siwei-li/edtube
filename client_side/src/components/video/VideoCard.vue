@@ -1,17 +1,17 @@
 <template>
-  <!--<el-card @click="watch(video)">-->
+  <!--<el-card ">-->
   <el-card :body-style="{ padding: '0px' }" class="video-card">
     <div class="thumb">
-      <el-image :src="video.thumbnail" router :to="video.url">
+      <el-image :src="video.thumbnail" @click="watch(video)">
         <div slot="placeholder" class="image-slot">
-<!--          <img src="/static/ui/placeholder_img.png"></img>-->
+          <!--          <img src="/static/ui/placeholder_img.png"></img>-->
           <el-image :src="require('@/assets/ui/placeholder_img.png')"></el-image>
         </div>
       </el-image>
       <div class="card-layer">
         <div class="card-icon">
           <el-tooltip class="item" effect="dark" content="Watch Later" placement="left">
-            <el-button type="info" icon="el-icon-time" size="small" circle></el-button>
+            <el-button type="info" class="custom-icon" icon="el-icon-time" size="small"></el-button>
           </el-tooltip>
         </div>
         <div class="video-time">
@@ -21,7 +21,7 @@
     </div>
 
     <div class="card-text">
-      <div class="card-title" router :to="video.url">
+      <div class="card-title" @click="watch(video)">
         <span v-bind:title="video.title">{{ video.title }}</span>
       </div>
       <div class="card-info">
@@ -48,7 +48,7 @@ export default {
   },
   methods: {
     watch(video) {
-      this.router.push("/video/" + video.id);
+      this.$router.push(video.url);
     }
   }
 }
@@ -67,7 +67,16 @@ export default {
   position: absolute;
   top: 5px;
   right: 5px;
-  opacity: 70%;
+  opacity: 80%;
+}
+
+.custom-icon {
+  font-size: 20px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .card-title {

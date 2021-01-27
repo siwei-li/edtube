@@ -1,19 +1,31 @@
 <template>
   <div class="header">
-    <el-row type="flex" class="row-bg" justify="space-between">
+    <el-row type="flex" class="row-bg" style="height: 60px" justify="space-between">
 
-      <div class="togl">
-        <el-button @click="toglMenu" icon="el-icon-more" circle></el-button>
+      <el-row type="flex">
+        <div class="togl">
+          <el-button @click="toglMenu" icon="el-icon-more" circle></el-button>
+        </div>
+
+        <div class="header-logo">
+          <h2 style="margin: 0">EdTube</h2>
+        </div>
+      </el-row>
+
+      <!--      <el-row type="flex" justify="space-between">-->
+      <!--        <el-col>-->
+
+
+      <div class="search">
+        <Search></Search>
       </div>
-
-      <div class="Search">
-        Search
-      </div>
-
 
       <div class="user">
         <User/>
       </div>
+
+      <!--      </el-col>-->
+      <!--      </el-row>-->
 
     </el-row>
   </div>
@@ -39,7 +51,34 @@ export default {
 </script>
 
 <style>
+.header {
+  text-align: center;
+  line-height: 60px;
+  position: fixed;
+  background-color: white;
+  /*height: 12%;*/
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 0 20px 0 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .3);
+  z-index: 999;
+}
+
+.header-logo {
+  height: 60px;
+  margin-left: 15px;
+}
+
 .togl {
-  margin-left: -8px;
+  margin-left: -5px;
+}
+
+.search {
+  margin-left: 10px;
+}
+
+.user {
+  margin-left: 10px;
 }
 </style>
