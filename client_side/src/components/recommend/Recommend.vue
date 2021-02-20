@@ -1,6 +1,6 @@
 <template>
-  <div>
-    Recommend
+  <div id="wrapper">
+    <h3 style="margin-left: 5px">Recommended</h3>
   </div>
 </template>
 

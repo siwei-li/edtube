@@ -1,79 +1,133 @@
 <template>
-  <div>
-    <div>
-      <img :src="this.$auth.user.picture">
-      <h2>{{ $auth.user.nickname }}</h2>
-      <p>{{ $auth.user.email }}</p>
+  <Layout>
+    <div class="wrapper">
+
+      <div class="auth0">
+
+        <div class="up-left">
+          <div class="avatar-uploader">
+            <el-upload
+                action=""
+                :http-request="addAttachment"
+                :auto-upload="true"
+                :show-file-list="false"
+                :on-success="handleAvatarSuccess"
+                :before-upload="beforeAvatarUpload">
+              <img :src="imageUrl" class="avatar">
+
+              <div class="button-wrapper">
+                <!--        <i class="el-icon-plus avatar-uploader-icon"></i>-->
+                <el-button style="padding-left: 16px">Change Picture</el-button>
+              </div>
+            </el-upload>
+          </div>
+          <div class="upload-tip">(Only jpg/png files not exceeding 2MB allowed.)
+          </div>
+
+        </div>
+        <div class="up-right">
+          <el-form :inline="true" :model="auth0">
+            <el-form-item label="Nickname:">
+              <el-input v-model="auth0.nickname"></el-input>
+              `
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="changeName">Change</el-button>
+            </el-form-item>
+          </el-form>
+        </div>
+
+      </div>
+
+      <div>
+        <h2>{{ $auth.user.nickname }}</h2>
+        <p>{{ $auth.user.email }}</p>
+        <pre>{{ JSON.stringify($auth.user, null, 2) }}</pre>
+      </div>
+      {{ apiMessage }}
+
     </div>
-    <div>
-      <pre>{{ JSON.stringify($auth.user, null, 2) }}</pre>
-    </div>
-
-    <el-upload
-        class="avatar-uploader"
-        action=""
-        :http-request="addAttachment"
-        :auto-upload="true"
-        :show-file-list="false"
-        :on-success="handleAvatarSuccess"
-        :before-upload="beforeAvatarUpload">
-      <img :src="imageUrl" class="avatar">
-      <i class="el-icon-plus avatar-uploader-icon"></i>
-    </el-upload>
-
-    <div class="el-upload__tip" slot="tip">Only jpg/png files not exceeding 2MB allowed.</div>
-    {{apiMessage}}
-
-  </div>
+  </Layout>
 </template>
 
 <style scoped>
-.avatar-uploader .el-upload {
-  border: 1px dashed #d9d9d9;
-  border-radius: 6px;
+.wrapper {
+  padding: 20px;
+}
+
+.avatar-uploader {
+  width: 130px;
+  height: 130px;
+  border: 2px dashed #d9d9d9;
+  border-radius: 10px;
   cursor: pointer;
   position: relative;
   overflow: hidden;
 }
-.avatar-uploader .el-upload:hover {
+
+.avatar-uploader:hover {
   border-color: #409EFF;
 }
-.avatar-uploader-icon {
-  font-size: 30px;
-  color: black;
-  /*color: #8c939d;*/
-  /*width: 120px;*/
-  /*height: 120px;*/
-  /*line-height: 60px;*/
+
+.button-wrapper {
+  width: 130px;
+  height: 130px;
+  opacity: 50%;
   /*text-align: center;*/
   /*vertical-align:middle;*/
-  position: absolute;
-  top: 45px;
-  left:45px;
+  /*line-height: 120px;*/
 }
+
+.button-wrapper:hover {
+  opacity: 70%;
+}
+
 .avatar {
   width: 120px;
   height: 120px;
   display: block;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+}
+
+/*.avatar-uploader-icon {*/
+/*  font-size: 40px;*/
+/*  color: #8c939d;*/
+/*  position: absolute;*/
+/*  top: 45px;*/
+/*  left:45px;*/
+/*}*/
+.upload-tip {
+  margin-top: 5px;
+  /*margin-left: -5px;*/
+  /*width:150px;*/
+  /*text-align: center;*/
+  font-size: 12px;
 }
 </style>
 
 <script>
 import axios from "axios";
+import Layout from "@/views/Layout";
 
 export default {
+  components: {Layout,},
   data() {
     return {
+      auth0: {nickname: this.$auth.user.nickname},
       imageUrl: this.$auth.user.picture,
-      apiMessage:''
+      apiMessage: ''
     };
   },
   methods: {
+    changeName() {
+    },
     handleAvatarSuccess(res, file) {
       this.imageUrl = URL.createObjectURL(file.raw);
     },
     beforeAvatarUpload(file) {
-      const isJPG = (file.type === 'image/jpeg'|| 'image/png');
+      const isJPG = (file.type === 'image/jpeg' || 'image/png');
       const isLt2M = file.size / 1024 / 1024 < 2;
 
       if (!isJPG) {
@@ -102,3 +156,4 @@ export default {
   }
 }
 </script>
+

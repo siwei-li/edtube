@@ -5,7 +5,7 @@
 
       <el-row :gutter="20">
         <el-col :xs="24" :sm="16" :md="16" :lg="16" :xl="14">
-          <Comment></Comment>
+          <Comment :commentList="commentList"></Comment>
         </el-col>
         <el-col :xs="24" :sm="8" :md="8" :lg="8" :xl="10">
           <Recommend></Recommend>
@@ -27,6 +27,41 @@ export default {
   components: {Recommend, Comment, Layout, Player},
   data: () => ({
     video: {},
+    commentList: [
+      {
+        id: "111",
+        nickName: "chloe",
+        replyData: "lallla",
+        good: 100,
+        bad: 1,
+        showTextarea: false,
+        timestamp: 1600670910515,
+        replyList: [
+          {
+            id: "111",
+            nickName: "tom",
+            toUser: "chloe",
+            replyData: "大师兄说的对",
+            good: 2,
+            bad: 0,
+            showTextarea: false,
+            textarea: "",
+            timestamp: 1600670910515,
+          },
+        ],
+      },
+      {
+        id: "222",
+        nickName: "jeny",
+        good: 500,
+        bad: 9,
+        replyData: "好棒哇哇哇哇哇",
+        showTextarea: false,
+        replyList: [],
+        timestamp: 1600670910515,
+      },
+    ],
+
   }),
   methods: {
     getVideos() {
@@ -35,7 +70,7 @@ export default {
         subscribers: '100k',
         createdAt: '2021-01-19',
         // videoUrl: '/video.mp4',
-        videoUrl: 'https://d2pxo8g26zv991.cloudfront.net/wp-content/uploads/2014/10/HomeVideo_v04_1.mp4',
+        videoUrl: "https://www.youtube.com/embed/VhtFSSq3lXo",
         title: 'Attendance Management System Attendance Management System Attendance Management System Attendance Ma',
         description:
             'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Culpa vel inventore voluptatum reiciendis delectus quibusdam incidunt consequuntur, nostrum aperiam, natus quidem qui corrupti reprehenderit quaerat neque voluptatibus? Ullam, maiores temporibus!'

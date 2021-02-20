@@ -1,5 +1,8 @@
 <template>
   <div style="height: 60px">
+    <div v-if="this.$auth.loading">
+      <i class="el-icon-loading"></i>
+    </div>
     <div v-if="!this.$auth.loading">
 
       <div v-if="!this.$auth.isAuthenticated" class="button-group">
@@ -46,10 +49,10 @@ export default {
   methods: {
     // Log the user in
     login() {
-      this.$auth.loginWithRedirect();
+      this.$auth.loginWithPopup();
     },
     signup() {
-      this.$auth.loginWithRedirect({screen_hint: 'signup'});
+      this.$auth.loginWithPopup({screen_hint: 'signup'});
     },
     // Log the user out
     logout() {

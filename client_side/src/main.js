@@ -19,12 +19,20 @@ Vue.use(Auth0Plugin, {
   audience,
   onRedirectCallback: appState => {
     router.push(
-      appState && appState.targetUrl
-        ? appState.targetUrl
-        : window.location.pathname
+        appState && appState.targetUrl
+            ? appState.targetUrl
+            : window.location.pathname
     );
   }
 });
+
+//===============vue-plyr==========
+import VuePlyr from 'vue-plyr'
+import 'vue-plyr/dist/vue-plyr.css'
+
+Vue.use(VuePlyr, {
+  plyr: {}
+})
 
 //===============ElementUI===========
 // // import 'element-ui/lib/theme-chalk/index.css'

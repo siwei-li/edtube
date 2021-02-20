@@ -1,9 +1,15 @@
 <template>
 <div class="searchBox">
-  <el-autocomplete placeholder="Search..." v-model="query"
+  <el-autocomplete placeholder="Enter something that interests you!"
+                   v-model="query"
                    :fetch-suggestions="querySearchAsync" @select="handleSelect" @keyup.enter.native="search"
                    :trigger-on-focus="false"
+                   popper-class="popover"
                    class="front-search">
+    <template slot-scope="{ item }">
+      <div class="title">{{ item.value }}</div>
+      <span class="category">{{ item.category }}</span>
+    </template>
     <el-button class="search-button" slot="append" icon="el-icon-search" @click="search"></el-button>
   </el-autocomplete>
 </div>
@@ -19,10 +25,15 @@ export default {
     }
   },
   methods: {
-
-    querySearchAsync(queryString, cb) {
-
-      var results = queryString ? this.queryList.filter(this.createStateFilter(queryString)) : this.queryList;
+    load() {
+      return [
+        {"value": "vid1", "category": "Math"},
+        {"value": "vid2", "category": "Arts"},
+      ]
+    },
+    querySearchAsync(query, cb) {
+      var videos = this.queryList;
+      var results = query ? videos.filter(this.createStateFilter(query)) : videos;
 
       clearTimeout(this.timeout);
       this.timeout = setTimeout(() => {
@@ -30,15 +41,16 @@ export default {
       }, 3000 * Math.random());
     },
 
-    createStateFilter(queryString) {
-      return (query) => {
-        return (query.value.toLowerCase().indexOf(queryString.toLowerCase()) === -1);
+    createStateFilter(query) {
+      return (item) => {
+        return (item.value.toLowerCase().indexOf(query.toLowerCase()) === 0);
+        // return true;
       };
     },
 
     handleSelect(item) {
-      console.log(item);
-      this.query = item;
+      console.log(item.value);
+      this.query = item.value;
     },
 
     search() {
@@ -47,13 +59,36 @@ export default {
       }
 
     }
+  },
+  mounted() {
+    this.queryList = this.load();
   }
 }
 </script>
 
-<style>
+<style lang="less">
 .front-search {
+  //max-width: 500px;
   width: 400px;
-  /*width: auto;*/
+}
+
+.popover {
+  //width: 500px;
+  line-height: normal;
+  padding: 7px;
+
+  .title {
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  .category {
+    font-size: 12px;
+    color: #b4b4b4;
+  }
+
+  .highlighted .category {
+    color: #ddd;
+  }
 }
 </style>
