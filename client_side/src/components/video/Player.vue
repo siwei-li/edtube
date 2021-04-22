@@ -7,7 +7,7 @@
       </div>
 
       <vue-plyr ref="plyr">
-        <div data-plyr-provider="youtube" data-plyr-embed-id="bTqVqk7FSmY"></div>
+        <div data-plyr-provider="youtube" :data-plyr-embed-id=video.platform_id></div>
       </vue-plyr>
 
       <!--    <vue-plyr ref="plyr">-->
@@ -59,7 +59,7 @@
 
             <!--          <el-divider></el-divider>-->
             <div class="video-time">
-              <time>{{ video.createdAt }}</time>
+              <time>{{ video.pub_date}}</time>
             </div>
           </el-collapse-item>
 
@@ -109,7 +109,12 @@ export default {
       this.saved = 1 - this.saved;
     }
   },
-
+  watch: {
+	  video:{
+      handler(val){
+		  console.log(val);}
+	  }
+  },
   mounted() {
     this.loading = false
     this.videoLoading = false

@@ -28,7 +28,8 @@ SECRET_KEY = env('SECRET_KEY')
 # DEBUG = True
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['192.168.52.20','127.0.0.1']
+IP_PROD = env('IP_PROD')
+ALLOWED_HOSTS = [IP_PROD,'127.0.0.1']
 
 # Application definition
 REST_FRAMEWORK = {
@@ -52,6 +53,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'usr_auth0',
+    'video',
     'rest_framework',
     'rest_framework_jwt',
     'corsheaders',
@@ -68,7 +70,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'requestlogs.middleware.RequestLogsMiddleware',
+    # 'requestlogs.middleware.RequestLogsMiddleware',
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -216,9 +218,35 @@ JWT_AUTH = {
     'JWT_AUTH_HEADER_PREFIX': 'Bearer',
 }
 
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST = (
     'https://localhost:8080',
-)
-CORS_ALLOW_HEADERS = ['Authorization', ]
+    'https://edtube.netlify.app',
 
+)
+CORS_EXPOSE_HEADERS = 'Authorization'
+CORS_ALLOW_METHODS = (
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+    'VIEW',
+)
+
+CORS_ALLOW_HEADERS = (
+    'XMLHttpRequest',
+    'X_FILENAME',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+    'Pragma',
+)
 SECURE_SSL_REDIRECT = False

@@ -20,7 +20,7 @@ class Profile(models.Model):
         db_table = 'profile'  # 指明数据库表名
 
     def __str__(self):
-        return "Profile of " + self.auth0_user
+        return "Profile of user " + str(self.auth0_user)
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):

@@ -8,9 +8,9 @@
           <div class="avatar-uploader">
             <el-upload
                 action=""
-                :http-request="addAttachment"
-                :auto-upload="true"
                 :show-file-list="false"
+                :http-request="upload"
+                :auto-upload="true"
                 :on-success="handleAvatarSuccess"
                 :before-upload="beforeAvatarUpload">
               <img :src="imageUrl" class="avatar">
@@ -26,10 +26,9 @@
 
         </div>
         <div class="up-right">
-          <el-form :inline="true" :model="auth0">
+          <el-form :inline="true" :model="form">
             <el-form-item label="Nickname:">
-              <el-input v-model="auth0.nickname"></el-input>
-              `
+              <el-input v-model="prefill"></el-input>
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="changeName">Change</el-button>
@@ -39,11 +38,11 @@
 
       </div>
 
-      <div>
-        <h2>{{ $auth.user.nickname }}</h2>
-        <p>{{ $auth.user.email }}</p>
-        <pre>{{ JSON.stringify($auth.user, null, 2) }}</pre>
-      </div>
+<!--      <div>-->
+<!--        <h2>{{ $auth.user.nickname }}</h2>-->
+<!--        <p>{{ $auth.user.email }}</p>-->
+<!--        <pre>{{ JSON.stringify($auth.user, null, 2) }}</pre>-->
+<!--      </div>-->
       {{ apiMessage }}
 
     </div>
@@ -108,21 +107,35 @@
 </style>
 
 <script>
-import axios from "axios";
 import Layout from "@/views/Layout";
+import ProfileService from "@/services/ProfileService";
 
 export default {
   components: {Layout,},
   data() {
     return {
-      auth0: {nickname: this.$auth.user.nickname},
       imageUrl: this.$auth.user.picture,
-      apiMessage: ''
+      apiMessage: 'init',
+      form: {Nickname:''},
+      prefill:this.$auth.user.nickname,
     };
   },
   methods: {
-    changeName() {
+    async changeName() {
+      const object = {"nickname":this.prefill};
+      console.log(JSON.stringify(object))
+      try {
+      const response = await ProfileService.updateNickname(JSON.stringify(object)
+      )
+      // , {headers: {
+      //     Authorization: `Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImFGcW9LcXFfVEVQYkxKX0R0eVVITCJ9.eyJpc3MiOiJodHRwczovL2VkdHViZS51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWZmNzJlOWQ1NGVhMjAwMDY5Yzg4NmQ5IiwiYXVkIjpbImh0dHBzOi8vZWR0dWJlIiwiaHR0cHM6Ly9lZHR1YmUudXMuYXV0aDAuY29tL3VzZXJpbmZvIl0sImlhdCI6MTYxODg5MDMyNCwiZXhwIjoxNjE4OTc2NzI0LCJhenAiOiJoSTkzaVBHTTl4NHduYmVSeFNuMENwb2lPR0JFYXNTcSIsInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwgb2ZmbGluZV9hY2Nlc3MiLCJwZXJtaXNzaW9ucyI6W119.K3tPNrloQzKJ5fMHAcgR1wTbFySn0pWdV5XjVO-hsv2Xl2Y_94ntPP8pwBs3AXw7Q-1F6nEWxWP_Z3kLNf_jNNCbx6EDGOu6usZRZDggFAFJi1bsKNp5mmgtYEjIl6AEVVJ9V6qyA_UKSIrFZcVqPJLkjpNlnsS92iEuLIMMcy4gYeHpWGocH_w0Td15zIRcbjpi5OIoJi0mMFczgKP_AHyZmC2is8XLsqmALnNpaJCiCp9pVugwpY7gxWmc-8ESWb_056fGDMTyimaTTjSvgn7RaBGV6KlfZyC5i1qTlFqWO57fY-DMWPtRQIZIiv8WCfC9kR0fSk3xQtrevGGupA`
+      //   }})
+      this.apiMessage = response;
+      } catch (err) {
+        console.log(err)
+      }
     },
+
     handleAvatarSuccess(res, file) {
       this.imageUrl = URL.createObjectURL(file.raw);
     },
@@ -138,18 +151,9 @@ export default {
       }
       return isJPG && isLt2M;
     },
-    async addAttachment(file) {
-      // Get the access token from the auth wrapper
-      const token = await this.$auth.getTokenSilently();
-      console.log(token)
 
-      // Use Axios to make a call to the API
-      const { data } = await axios.post('/api/profile_pic', file,
-          {headers: {
-          Authorization: `Bearer ${token}`    // send the access token through the 'Authorization' header
-        }
-      });
-
+    async upload(file) {
+      const { data } = await ProfileService.profilePic(file);
       this.apiMessage = data;
       // console.log("API called and fetched.");
     }

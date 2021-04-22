@@ -1,13 +1,15 @@
-import {apiClient} from './apiClient.js'
-import {httpGet} from "@/services/http-client";
+import Api from '@/services/Api'
 
 export default {
-    getProfile() {
-        return apiClient.get('/profile')
+    updateProfile(data) {
+        return Api().put(`/user_profile`,data);
     },
-    // test() {
-    //     return apiClient.get('/private')
-    // }
+    updateNickname(data,config={}) {
+        return Api().patch(`/user_nickname`, data,config);
+    },
+    profilePic(file) {
+      return Api().post(`/profile_pic`,file);
+    },
 }
 
-export const test = (params = {}) => apiClient.get('/private', params)
+// export const test = (params = {}) => apiClient.get('/private', params)

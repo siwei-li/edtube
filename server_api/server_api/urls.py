@@ -18,7 +18,12 @@ from django.urls import path, include
 
 # from django.conf.urls import url
 
+admin.site.site_header = "EdTube Admin"
+admin.site.site_title = "EdTube Admin Portal"
+admin.site.index_title = "Welcome to EdTube Portal"
+
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('usr_auth0.urls'))
+    path('admin-edtube/', admin.site.urls, name="admin"),
+    path('', include('usr_auth0.urls')),
+    path('', include('video.urls'))
 ]

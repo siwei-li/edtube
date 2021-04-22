@@ -2,12 +2,21 @@
   <!--<el-card ">-->
   <el-card :body-style="{ padding: '0px' }" class="video-card">
     <div class="thumb">
-      <el-image :src="video.thumbnail" @click="watch(video)">
+
+      <div class="thumb-wrapper">
+        <router-link :to="{ name: 'Watch',params:{id:video.id}}" target="_blank">
+      <el-image :src='thumbSource + video.platform_id +"/hqdefault.jpg"' :lazy=true>
         <div slot="placeholder" class="image-slot">
-          <!--          <img src="/static/ui/placeholder_img.png"></img>-->
-          <el-image :src="require('@/assets/ui/placeholder_img.png')"></el-image>
+          <!-- <img src="/static/ui/placeholder_img.png"> -->
+          Loading<span class="dot">...</span>
+        </div>
+        <div slot="error" class="image-slot">
+          <i class="el-icon-picture-outline"></i>
         </div>
       </el-image>
+      </router-link>
+      </div>
+
       <div class="card-layer">
         <div class="card-icon">
           <el-tooltip class="item" effect="dark" content="Watch Later" placement="left">
@@ -22,7 +31,9 @@
 
     <div class="card-text">
       <div class="card-title" @click="watch(video)">
+        <!-- <router-link :to="{ name: 'Watch',params:{id:video.id}}" target="_blank"> -->
         <span v-bind:title="video.title">{{ video.title }}</span>
+        <!-- </router-link> -->
       </div>
       <div class="card-info">
         details
@@ -37,7 +48,8 @@ export default {
   name: "VideoCard",
   data() {
     return {
-
+      loading:false,
+      thumbSource:"https://i.ytimg.com/vi/",
     };
   },
   props: {
@@ -48,19 +60,27 @@ export default {
   },
   methods: {
     watch(video) {
-      this.$router.push(video.url);
+      console.log(video);
+      // this.$router.push('/watch/'+video.id);
+      let routeData = this.$router.resolve({ name: 'Watch',params:{id:video.id}});
+      window.open(routeData.href, '_blank');
     }
   }
 }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 .video-card {
   margin-bottom: 25px;
 }
 
 .thumb {
   position: relative;
+}
+
+.el-image {
+  max-height: 100%;
+  height: 200px;
 }
 
 .card-layer {

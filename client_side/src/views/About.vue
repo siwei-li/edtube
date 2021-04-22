@@ -1,7 +1,7 @@
 <template>
   <div class="about">
     <h1>This is an about page</h1>
-    <div v-if="!$auth.loading">
+    <div v-if="!this.$auth.loading">
     <button @click="testApi">Call API</button>
     </div>
     <p>{{ apiMessage }}</p>
@@ -10,7 +10,8 @@
 
 <script>
 // import axios from "axios";
-import {test} from "@/services/ProfileService";
+import ProfileService from "@/services/ProfileService";
+import VideoService from "@/services/VideoService";
 
 export default {
   name: "About",
@@ -20,10 +21,17 @@ export default {
     };
   },
   methods: {
+    // async testApi() {
+    //   // ProfileService.getProfile({}).then(res=>console.log(res));
+    //   const profile = await ProfileService.updateProfile()
+    //       .catch((err) => {
+    //         console.log(err)
+    //         // this.errored = true
+    //       })
+    //   console.log(profile);
+    // },
+
     async testApi() {
-      test().then(res=>console.log(res));
-    },
-    async callApi() {
       // Get the access token from the auth wrapper
       const token = await this.$auth.getTokenSilently();
       console.log(token)

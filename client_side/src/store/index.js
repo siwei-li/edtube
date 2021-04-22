@@ -5,13 +5,9 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    // token:"",
     drawer: false,
   },
   mutations: {
-    // storeToken(state, token) {
-    //   state.token=token;
-    // },
     toggleMenu(state) {
       state.drawer = !state.drawer;
     },

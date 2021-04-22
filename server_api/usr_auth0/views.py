@@ -24,7 +24,6 @@ def get_token_auth_header(request):
 
     return token
 
-
 def requires_scope(required_scope):
     """Determines if the required scope is present in the Access Token
     Args:
@@ -48,7 +47,6 @@ def requires_scope(required_scope):
         return decorated
 
     return require_scope
-
 
 def requires_permission(required_permission):
     """Determines if the required permission is present in the Access Token
@@ -100,7 +98,9 @@ def update_nickname(request):
     nickname_serializer = NicknameSerializer(data=request_data)
     if nickname_serializer.is_valid():
         call_auth0_management(f'users/{user_id}', 'patch', nickname_serializer.validated_data)
-        return JsonResponse({"user": user_id, "nickname": nickname_serializer.validated_data})
+        return JsonResponse({"user": user_id, "nickname": nickname_serializer.validated_data["nickname"]})
+    
+
     return JsonResponse(nickname_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 

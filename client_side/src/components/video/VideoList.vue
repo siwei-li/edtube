@@ -4,7 +4,10 @@
       <h2>{{ listTitle }}</h2>
     </div>
     <el-row :gutter=15 v-infinite-scroll="getVideos" style="overflow:auto" class="card-tiles">
-      <el-col :xs="12" :sm="8" :md="8" :lg="6" :xl="6" v-for="i in  loading? 10:14" :key="i" v-loading="loading">
+      <el-col :xs="24" :sm="8" :md="6" :lg="6" :xl="6"
+              v-for="(video, i) in  videos" :key="i"
+      v-loading="loading">
+        <!--              loading ? 12 :-->
         <VideoCard :video="video">
         </VideoCard>
       </el-col>
@@ -25,41 +28,39 @@ export default {
       errored: false,
       videos: [],
       page: 1,
+      video:{}
 
-      video: {
-        url: '/watch/12',
-        thumbnail: 'https://cdn.vuetifyjs.com/images/cards/sunshine.jpg',
-        title: 'Top western road trips Top western road trips Top western road trips Top western road trips',
-        views: '9.6k',
-        createdAt: '6 hours ago'
-      },
     }
   },
-
+  mounted() {
+    this.getVideos();
+  },
   methods: {
     async getVideos($state) {
-      // if(!this.loaded) {
-      //   this.loading=true;
-      // }
-      //
-      // const videos = await VideoService.getVideoList()
-      //     .catch((err) => {
-      //       console.log(err)
-      //       this.errored = true
-      //     })
-      //     .finally(() => {
-      //       this.loading = false
-      //     })
-      //
-      // if (videos.data.data.length) {
-      //   this.page += 1
-      //   this.videos.push(...videos.data.data)
-      //   $state.loaded()
-      //   this.loaded = true
-      // } else {
-      //   $state.complete()
-      // }
-      console.log("1")
+      if(!this.loaded) {
+        this.loading=true;
+      }
+
+      const videos = await VideoService.getVideoList('public',{page:this.page})
+          .catch((err) => {
+            console.log(err)
+            this.errored = true
+          })
+          .finally(() => {
+            this.loading = false
+          })
+
+      if (typeof videos === 'undefined') return
+      // console.log(videos.data)
+      if (videos.data.length) {
+        this.page += 1
+        this.videos.push(...videos.data)
+        console.log(this.videos)
+        // $state.loaded()
+        this.loaded = true
+      } else {
+        // $state.complete()
+      }
     },
 
   },
