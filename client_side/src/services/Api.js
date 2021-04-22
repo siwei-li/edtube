@@ -4,7 +4,7 @@ import {getInstance} from '@/auth/index.js'
 
 export default () => {
     const axiosInstance = axios.create({
-        baseURL: '/api',
+        baseURL: process.env.API_ENDPOINT,
         Timeout: 1000 * 5,
         headers :{
             common:{

@@ -8,9 +8,9 @@ Vue.config.productionTip = false
 //=============Auth0======================
 // Import the Auth0 configuration
 // import { domain, clientId, audience } from "../auth_config.json";
-const domain = process.env.AUTH0_DOMAIN
-const clientId = process.env.AUTH0_CLIENT_ID
-const audience = process.env.AUTH0_AUDIENCE
+const domain = process.env.VUE_APP_AUTH0_DOMAIN
+const clientId = process.env.VUE_APP_AUTH0_CLIENT_ID
+const audience = process.env.VUE_APP_AUTH0_AUDIENCE
 // Import the plugin here
 import { Auth0Plugin } from "./auth";
 
