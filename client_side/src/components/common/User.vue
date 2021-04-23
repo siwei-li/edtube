@@ -26,10 +26,12 @@
 
         <el-popover
             placement="bottom-end"
-            title="标题"
+            :title="this.$auth.user.name"
             width="200"
-            trigger="hover"
-            content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。">
+            trigger="hover">
+          <div>
+            <el-button type="text" @click="logout">Logout</el-button>
+          </div>
           <el-avatar :src="this.$auth.user.picture" class="user-avatar" slot="reference"></el-avatar>
         </el-popover>
       </div>

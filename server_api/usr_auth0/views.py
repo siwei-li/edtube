@@ -10,10 +10,54 @@ from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.parsers import JSONParser
 from rest_framework.permissions import AllowAny
+from rest_framework.renderers import JSONRenderer
 
 from usr_auth0.serializers import ProfileSerializer, NicknameSerializer
 from utils.auth.manage_auth0 import call_auth0_management
 
+import base64
+
+from xmlrpc.client import ServerProxy, Fault
+from hashlib import md5
+
+
+class GravatarXMLRPC(object):
+    API_URI = 'https://secure.gravatar.com/xmlrpc?user={0}'
+
+    def __init__(self, request, password=''):
+        self.request = request
+        self.password = password
+        self.email = sanitize_email(request.user.email)
+        self.email_hash = md5_hash(self.email)
+        self._server = ServerProxy(
+            self.API_URI.format(self.email_hash))
+
+    def saveData(self, image):
+        """ Save binary image data as a userimage for this account """
+        # params = { 'data': base64_encode(image.read()), 'rating': 0, }
+        # return self._call('saveData', params)
+        return self._call('saveData', image)
+        #return self.useUserimage(image)
+
+    def _call(self, method, params={}):
+        """ Call a method from the API, gets 'grav.' prepended to it. """
+        args = { 'password': self.password, }
+        args.update(params)
+
+        try:
+            return getattr(self._server, 'grav.' + method, None)(args)
+        except Fault as error:
+            error_msg = "Server error: {1} (error code: {0})"
+            print(error_msg.format(error.faultCode, error.faultString))
+
+def base64_encode(obj):
+    return base64.b64encode(obj)
+
+def sanitize_email(email):
+    return email.lower().strip()
+
+def md5_hash(string):
+    return md5(string.encode('utf-8')).hexdigest()
 
 def get_token_auth_header(request):
     """Obtains the Access Token from the Authorization Header
@@ -96,18 +140,38 @@ def update_nickname(request):
     request_data = JSONParser().parse(request)
 
     nickname_serializer = NicknameSerializer(data=request_data)
-    if nickname_serializer.is_valid():
-        call_auth0_management(f'users/{user_id}', 'patch', nickname_serializer.validated_data)
-        return JsonResponse({"user": user_id, "nickname": nickname_serializer.validated_data["nickname"]})
-    
 
+    if nickname_serializer.is_valid():
+        # res = call_auth0_management(f'users/{user_id}', 'patch', '{"nickname":"lol"}')
+        data = JSONRenderer().render(nickname_serializer.data)
+        res = call_auth0_management(f'users/{user_id}', 'patch', data)
+        print(res)
+        # TODO
+        # if type(res)==str:
+
+        return JsonResponse(res)
     return JsonResponse(nickname_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['POST'])
-def profile_pic(requests):
+@api_view(['PATCH'])
+def profile_pic(request):
+    request_data = JSONParser().parse(request)
+    print(request_data['file'])
 
-    return JsonResponse({"message":"Image successfully uploaded."})
+    GravatarXMLRPC(request).saveData(request_data['file'])
+
+    return JsonResponse({"message":"Image successfully uploaded:"})
+
+
+
+
+
+
+
+
+
+
+
 
 # Testing Restful API =======================================================
 @api_view(['GET'])

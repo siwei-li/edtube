@@ -44,15 +44,16 @@ def call_auth0_management(url, method, data=None):
     # res = requests.get(f'{base_url}/api/v2/{action}', headers=headers)
     method_to_call = getattr(requests,method)
     res = method_to_call(f'{base_url}/api/v2/{url}', data, headers=headers)
-    print(res.json())
+    return res.json()
   except HTTPError as e:
-    print(f'HTTPError: {str(e.code)} {str(e.reason)}')
+    return f'HTTPError: {str(e.code)} {str(e.reason)}'
   except URLRequired as e:
-    print(f'URLRequired: {str(e.reason)}')
+    return f'URLRequired: {str(e.reason)}'
   except RequestException as e:
-    print(f'RequestException: {e}')
+    return f'RequestException: {e}'
   except Exception as e:
-    print(f'Generic Exception: {e}')
+    return f'Generic Exception: {e}'
 
 if __name__ == '__main__':
-  call_auth0_management('users','get')
+  # print(call_auth0_management('users','get'))
+  print(call_auth0_management('users/auth0%7C5fe2cffe08284b006bb4ff09','patch','{"nickname":"lol"}'))

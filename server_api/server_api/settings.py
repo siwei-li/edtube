@@ -225,7 +225,7 @@ CORS_ORIGIN_WHITELIST = (
     'https://edtube.netlify.app',
 
 )
-CORS_EXPOSE_HEADERS = 'Authorization'
+
 CORS_ALLOW_METHODS = (
     'DELETE',
     'GET',

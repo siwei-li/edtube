@@ -4,7 +4,7 @@ import {getInstance} from '@/auth/index.js'
 
 export default () => {
     const axiosInstance = axios.create({
-        baseURL: process.env.API_ENDPOINT,
+        baseURL: process.env.VUE_APP_API_ENDPOINT,
         Timeout: 1000 * 5,
         headers :{
             common:{
@@ -22,8 +22,9 @@ export default () => {
 
     axiosInstance.interceptors.request.use(async config => {
         const auth0 = getInstance();
+        if (auth0.isAuthenticated){
         const token = await auth0.getTokenSilently();
-        config.headers = {'Authorization':`Bearer ${token}`}
+        config.headers = {'Authorization':`Bearer ${token}`}}
         return config;
     }, error => {
         console.log(error)

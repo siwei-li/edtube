@@ -4,11 +4,12 @@ export default {
     updateProfile(data) {
         return Api().put(`/user_profile`,data);
     },
-    updateNickname(data,config={}) {
-        return Api().patch(`/user_nickname`, data,config);
+    updateNickname(data) {
+        return Api().patch(`/user_nickname`, data);
     },
-    profilePic(file) {
-      return Api().post(`/profile_pic`,file);
+    profilePic(data) {
+        console.log(data);
+      return Api().patch(`/profile_pic`,data);
     },
 }
 

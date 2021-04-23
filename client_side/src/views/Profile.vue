@@ -127,9 +127,6 @@ export default {
       try {
       const response = await ProfileService.updateNickname(JSON.stringify(object)
       )
-      // , {headers: {
-      //     Authorization: `Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImFGcW9LcXFfVEVQYkxKX0R0eVVITCJ9.eyJpc3MiOiJodHRwczovL2VkdHViZS51cy5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWZmNzJlOWQ1NGVhMjAwMDY5Yzg4NmQ5IiwiYXVkIjpbImh0dHBzOi8vZWR0dWJlIiwiaHR0cHM6Ly9lZHR1YmUudXMuYXV0aDAuY29tL3VzZXJpbmZvIl0sImlhdCI6MTYxODg5MDMyNCwiZXhwIjoxNjE4OTc2NzI0LCJhenAiOiJoSTkzaVBHTTl4NHduYmVSeFNuMENwb2lPR0JFYXNTcSIsInNjb3BlIjoib3BlbmlkIHByb2ZpbGUgZW1haWwgb2ZmbGluZV9hY2Nlc3MiLCJwZXJtaXNzaW9ucyI6W119.K3tPNrloQzKJ5fMHAcgR1wTbFySn0pWdV5XjVO-hsv2Xl2Y_94ntPP8pwBs3AXw7Q-1F6nEWxWP_Z3kLNf_jNNCbx6EDGOu6usZRZDggFAFJi1bsKNp5mmgtYEjIl6AEVVJ9V6qyA_UKSIrFZcVqPJLkjpNlnsS92iEuLIMMcy4gYeHpWGocH_w0Td15zIRcbjpi5OIoJi0mMFczgKP_AHyZmC2is8XLsqmALnNpaJCiCp9pVugwpY7gxWmc-8ESWb_056fGDMTyimaTTjSvgn7RaBGV6KlfZyC5i1qTlFqWO57fY-DMWPtRQIZIiv8WCfC9kR0fSk3xQtrevGGupA`
-      //   }})
       this.apiMessage = response;
       } catch (err) {
         console.log(err)
@@ -138,22 +135,27 @@ export default {
 
     handleAvatarSuccess(res, file) {
       this.imageUrl = URL.createObjectURL(file.raw);
+      window.alert("Image successfully uploaded :)")
     },
     beforeAvatarUpload(file) {
       const isJPG = (file.type === 'image/jpeg' || 'image/png');
       const isLt2M = file.size / 1024 / 1024 < 2;
 
       if (!isJPG) {
-        this.$message.error('Sorry, only jpg/png files allowed :(');
+        window.alert('Sorry, only jpg/png files allowed :(');
       }
       if (!isLt2M) {
-        this.$message.error('Sorry, try an image smaller than 2MB in size please :(');
+        window.alert('Sorry, try an image smaller than 2MB in size please :(');
       }
       return isJPG && isLt2M;
     },
 
     async upload(file) {
+      var formData = new FormData()
+      formData.append('file', file.file);
+
       const { data } = await ProfileService.profilePic(file);
+      // const { data } = await ProfileService.profilePic(formData);
       this.apiMessage = data;
       // console.log("API called and fetched.");
     }
