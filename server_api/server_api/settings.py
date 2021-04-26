@@ -143,19 +143,19 @@ WSGI_APPLICATION = 'server_api.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'edtube0',
-        'USER': 'root',
-        'HOST': '127.0.0.1',
-        'PASSWORD':'root',
-        'OPTIONS': {'ssl': {'ca':'/cleardb/ca-cert.pem', 'cert':'/cleardb/cert.pem', 'key':'/cleardb/key.pem'},},
-    }
-}
 # DATABASES = {
-#     'default': env.db()
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'edtube0',
+#         'USER': 'root',
+#         'HOST': '127.0.0.1',
+#         'PASSWORD':'root',
+#         'OPTIONS': {'ssl': {'ca':'/cleardb/ca-cert.pem', 'cert':'/cleardb/cert.pem', 'key':'/cleardb/key.pem'},},
+#     }
 # }
+DATABASES = {
+    'default': env.db()
+}
 DATABASES['default']['OPTIONS'] = {
     'sql_mode': 'traditional',
     'charset': 'utf8mb4',
