@@ -18,7 +18,7 @@ class Video(models.Model):
     # db_index=True
     category_id = models.IntegerField()
     channel_id = models.CharField(max_length=50,blank=True)
-    channel_title = models.CharField(max_length=30,blank=True)
+    channel_title = models.CharField(max_length=100,blank=True)
 
     class Meta:
         db_table = 'videos'  # 指明数据库表名

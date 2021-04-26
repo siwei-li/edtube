@@ -1,6 +1,5 @@
-import os
+from os import path
 from pathlib import Path
-
 import environ
 from pythonjsonlogger import jsonlogger
 
@@ -29,7 +28,7 @@ SECRET_KEY = env('SECRET_KEY')
 DEBUG = env('DEBUG')
 
 IP_PROD = env('IP_PROD')
-ALLOWED_HOSTS = [IP_PROD,'127.0.0.1']
+ALLOWED_HOSTS = [IP_PROD, '127.0.0.1']
 
 # Application definition
 REST_FRAMEWORK = {
@@ -114,7 +113,7 @@ TEMPLATES = [
 #             'context': extra
 #         }
 
-LOG_ROOT = os.path.join(BASE_DIR, 'logs')
+LOG_ROOT = path.join(BASE_DIR, 'logs')
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -123,7 +122,7 @@ LOGGING = {
             'level': 'INFO',
             'class': 'logging.FileHandler',
             'filename': 'logs/requestlogs.log',
-            # 'filename': os.path.join(LOG_ROOT, 'requestlogs.log'),
+            # 'filename': path.join(LOG_ROOT, 'requestlogs.log'),
             'formatter': 'json_formatted'
         },
     },
@@ -135,7 +134,7 @@ LOGGING = {
         },
     },
     'formatters': {
-        'json_formatted': {'()':jsonlogger.JsonFormatter},
+        'json_formatted': {'()': jsonlogger.JsonFormatter},
     },
 }
 
@@ -144,17 +143,30 @@ WSGI_APPLICATION = 'server_api.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'edtube',
-#         'USER': 'root',
-#         'HOST': '127.0.0.1',
-#     }
-# }
 DATABASES = {
-    'default': env.db(),
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'edtube0',
+        'USER': 'root',
+        'HOST': '127.0.0.1',
+        'PASSWORD':'root',
+        'OPTIONS': {'ssl': {'ca':'/cleardb/ca-cert.pem', 'cert':'/cleardb/cert.pem', 'key':'/cleardb/key.pem'},},
+    }
 }
+# DATABASES = {
+#     'default': env.db()
+# }
+DATABASES['default']['OPTIONS'] = {
+    'sql_mode': 'traditional',
+    'charset': 'utf8mb4',
+    'init_command':
+        'SET character_set_connection=utf8mb4;'
+        'SET collation_connection=utf8mb4_unicode_ci;'
+        "SET NAMES 'utf8mb4';"
+        "SET CHARACTER SET utf8mb4;"
+}
+
+# 'ALTER TABLE django_admin_log CONVERT TO CHARACTER SET utf8 COLLATE utf8_unicode_ci;'
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -189,10 +201,11 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
-
+PROJECT_ROOT = path.dirname(path.abspath(path.dirname(__file__)))
+STATIC_ROOT = path.join(PROJECT_ROOT, 'static').replace('\\','/')
 STATIC_URL = '/static/'
 
-#===================AUTH0=============================
+# ===================AUTH0=============================
 AUTH0_DOMAIN = 'edtube.us.auth0.com'
 API_IDENTIFIER = 'https://edtube'
 PUBLIC_KEY = None
@@ -250,3 +263,12 @@ CORS_ALLOW_HEADERS = (
     'Pragma',
 )
 SECURE_SSL_REDIRECT = False
+
+try:
+  from local_settings import *
+except Exception as e:
+  pass
+
+# Configure Django App for Heroku.
+# import django_heroku
+# django_heroku.settings(locals())
