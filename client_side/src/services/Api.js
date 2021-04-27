@@ -11,8 +11,8 @@ export default () => {
             common:{
                 'Content-Type': 'application/json; charset=UTF-8',
                  'X-Requested-With': 'XMLHttpRequest',
-                'Accept': 'application/json',
-                'WithCredentials': true,
+                // 'Accept': 'application/json',
+                // 'WithCredentials': true,
                 // 'Access-Control-Allow-Origin': '*'
             }
         },
