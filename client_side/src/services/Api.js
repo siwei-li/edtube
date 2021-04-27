@@ -4,6 +4,7 @@ import {getInstance} from '@/auth/index.js'
 
 export default () => {
     const axiosInstance = axios.create({
+        // baseURL: "https://edtube-server.herokuapp.com/api",
         baseURL: process.env.VUE_APP_API_ENDPOINT,
         Timeout: 1000 * 5,
         headers :{
