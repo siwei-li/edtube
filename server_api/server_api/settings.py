@@ -202,7 +202,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 PROJECT_ROOT = path.dirname(path.abspath(path.dirname(__file__)))
-STATIC_ROOT = path.join(PROJECT_ROOT, 'static').replace('\\','/')
+STATIC_ROOT = path.join(PROJECT_ROOT, 'static').replace('\\', '/')
 STATIC_URL = '/static/'
 
 # ===================AUTH0=============================
@@ -239,35 +239,36 @@ CORS_ORIGIN_WHITELIST = (
 
 )
 
-CORS_ALLOW_METHODS = (
-    'DELETE',
-    'GET',
-    'OPTIONS',
-    'PATCH',
-    'POST',
-    'PUT',
-    'VIEW',
-)
-
-CORS_ALLOW_HEADERS = (
-    'XMLHttpRequest',
-    'X_FILENAME',
-    'accept-encoding',
-    'authorization',
-    'content-type',
-    'dnt',
-    'origin',
-    'user-agent',
-    'x-csrftoken',
-    'x-requested-with',
-    'Pragma',
-)
+# CORS_ALLOW_METHODS = (
+#     'DELETE',
+#     'GET',
+#     'OPTIONS',
+#     'PATCH',
+#     'POST',
+#     'PUT',
+#     'VIEW',
+# )
+#
+# CORS_ALLOW_HEADERS = (
+#     'Access-Control-Allow-Headers',
+#     'XMLHttpRequest',
+#     'X_FILENAME',
+#     'accept-encoding',
+#     'authorization',
+#     'content-type',
+#     'dnt',
+#     'origin',
+#     'user-agent',
+#     'x-csrftoken',
+#     'x-requested-with',
+#     'Pragma',
+# )
 SECURE_SSL_REDIRECT = False
 
 try:
-  from local_settings import *
+    from local_settings import *
 except Exception as e:
-  pass
+    pass
 
 # Configure Django App for Heroku.
 # import django_heroku

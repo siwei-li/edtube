@@ -13,7 +13,7 @@ export default () => {
                  'X-Requested-With': 'XMLHttpRequest',
                 'Accept': 'application/json',
                 'WithCredentials': true,
-                'Access-Control-Allow-Origin': '*'
+                // 'Access-Control-Allow-Origin': '*'
             }
         },
     });
