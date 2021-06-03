@@ -8,6 +8,7 @@
         </div>
 
         <div class="header-logo">
+          <img style="height: 50px" src="@/assets/apple-touch-icon.png">
           <h2 style="margin: 0">EdTube</h2>
         </div>
       </el-row>

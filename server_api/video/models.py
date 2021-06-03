@@ -22,6 +22,7 @@ class Video(models.Model):
 
     class Meta:
         db_table = 'videos'  # 指明数据库表名
+        ordering = ['-id']
 
     def __str__(self):
         return "Video " + str(self.id) + "@"+self.source + "#" + str(self.platform_id)

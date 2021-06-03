@@ -86,7 +86,7 @@ export default {
         const video = await VideoService.getVideo(id)
 
         // if (!video) return this.$router.push('/')
-        this.video = video.data.data
+        this.video = video.data
         console.log(this.video)
       } catch (err) {
         this.errored = true

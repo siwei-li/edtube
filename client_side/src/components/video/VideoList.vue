@@ -41,7 +41,7 @@ export default {
         this.loading=true;
       }
 
-      const videos = await VideoService.getVideoList('public',{page:this.page})
+      const videos = await VideoService.getVideoList({page:this.page})
           .catch((err) => {
             console.log(err)
             this.errored = true
@@ -51,10 +51,10 @@ export default {
           })
 
       if (typeof videos === 'undefined') return
-      // console.log(videos.data)
-      if (videos.data.length) {
+      console.log(videos.data)
+      if (videos.data.results.length) {
         this.page += 1
-        this.videos.push(...videos.data)
+        this.videos.push(...videos.data.results)
         console.log(this.videos)
         // $state.loaded()
         this.loaded = true

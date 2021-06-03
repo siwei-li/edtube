@@ -32,6 +32,8 @@ ALLOWED_HOSTS = [IP_PROD, '127.0.0.1']
 
 # Application definition
 REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 100,
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     ),
@@ -53,9 +55,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'usr_auth0',
     'video',
+    'comment',
     'rest_framework',
     'rest_framework_jwt',
     'corsheaders',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -69,7 +73,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
-    # 'requestlogs.middleware.RequestLogsMiddleware',
+    'requestlogs.middleware.RequestLogsMiddleware',
+    'requestlogs.middleware.RequestIdMiddleware',
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -113,6 +118,23 @@ TEMPLATES = [
 #             'context': extra
 #         }
 
+SWAGGER_SETTINGS = {
+    'USE_SESSION_AUTH': False,
+    'SECURITY_DEFINITIONS': {
+        'Basic': {
+            'type': 'basic'
+        },
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+        }
+    }
+}
+
+REQUESTLOGS = {
+    'SERIALIZER_CLASS': 'requestlogs.storages.RequestIdEntrySerializer',
+}
 LOG_ROOT = path.join(BASE_DIR, 'logs')
 LOGGING = {
     'version': 1,
@@ -135,6 +157,11 @@ LOGGING = {
     },
     'formatters': {
         'json_formatted': {'()': jsonlogger.JsonFormatter},
+    },
+    'filters': {
+        'request_id_context': {
+            '()': 'requestlogs.logging.RequestIdContext',
+        },
     },
 }
 
@@ -211,14 +238,6 @@ API_IDENTIFIER = 'https://edtube'
 PUBLIC_KEY = None
 JWT_ISSUER = 'https://edtube.us.auth0.com/'
 
-# if AUTH0_DOMAIN:
-#     jsonurl = request.urlopen('https://' + AUTH0_DOMAIN + '/.well-known/jwks.json')
-#     jwks = json.loads(jsonurl.read().decode('utf-8'))
-#     cert = '-----BEGIN CERTIFICATE-----\n' + jwks['keys'][0]['x5c'][0] + '\n-----END CERTIFICATE-----'
-#     certificate = load_pem_x509_certificate(cert.encode('utf-8'), default_backend())
-#     PUBLIC_KEY = certificate.public_key()
-#     JWT_ISSUER = 'https://' + AUTH0_DOMAIN + '/'
-
 JWT_AUTH = {
     'JWT_PAYLOAD_GET_USERNAME_HANDLER':
         'utils.auth.utils.jwt_get_username_from_payload_handler',
@@ -231,6 +250,7 @@ JWT_AUTH = {
     'JWT_AUTH_HEADER_PREFIX': 'Bearer',
 }
 
+# ==========cors================================
 CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST = (
