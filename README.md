@@ -108,7 +108,7 @@ npm test
 M(Django) + C(Django) + MVVM (VueJS) = M + MVVM + C = MMVVMC
 ```
 
-项目组织包括 client_side 文件夹和 server_api 文件夹：前者是 Vue 单页面应用项目，它提供一个入口页面，页面中有一系列取数和数据组织逻辑，使用Element UI 组件库。后者是一个 Django Restful Framework项目，它管理数据库和API行为，提供一套独立的 Restful API 接口。
+项目组织包括 client_side 文件夹和 server_api 文件夹：前者是 Vue 单页面应用项目，它提供一个入口页面，页面中有一系列取数和数据组织逻辑，使用Element UI 组件库。后者是一个 Django RESTful Framework项目，它管理数据库和API行为，提供一套独立的 RESTful API 接口。
 
 ## API Documentation
 
@@ -157,6 +157,14 @@ Dump the data from edtube.sql file into local MySQL database.
 
 Access the local API swagger document at http://127.0.0.1:8000/api/v1/docs.
 
+```
+python manage.py test # run the django tests
+```
+
+### Logs
+
+See logs/requestlogs.log file for detailed information of each request received by the backend.
+
 ## Auth0 Authentication
 
 The project uses the [Auth0](https://auth0.com/) services to implement user authentication to ensure security and privacy, outsourcing the authentication process to a centralized login page whenever a user signs in. Auth0 can detect attacks and stop malicious attempts to access the applications such as blocking traffic from certain IPs and displaying CAPTCHA. See more about attack protection procedures [here]([Attack Protection (auth0.com)](https://auth0.com/docs/attack-protection)), and learn more about [Preventing Common Cybersecurity Threats (auth0.com)](https://auth0.com/docs/security/prevent-threats). The login process also supports social identity providers including Google and Github.
@@ -191,3 +199,16 @@ The API will receive a request including an Access Token:
 3. The app calls the API, passing along the Access Token.
 4. The API validates the Access Token by JWT verification library.
 5. The API responds with the requested information.
+
+
+
+To protect user information stored in Auth0 databases, the service running on the backend as machine-to-machine (M2M) application uses the Client Credentials Flow (defined in [OAuth 2.0 RFC 6749, section 4.4](https://tools.ietf.org/html/rfc6749#section-4.4)), in which it passes along its Client ID and Client Secret to authenticate itself and get a token.
+
+![Flows - Client Credentials - Authorization sequence diagram](https://i.loli.net/2021/06/04/nZo4tGrOLR7ADvQ.png)
+
+1. The M2M app authenticates with the Auth0 Authorization Server using its Client ID and Client Secret ([`**/oauth/token**` endpoint](https://auth0.com/docs/api/authentication?http#client-credentials-flow)).
+2. The Auth0 Authorization Server validates the Client ID and Client Secret.
+3. The Auth0 Authorization Server responds with an Access Token.
+4. The application can use the Access Token to call an Auth0 API on behalf of itself.
+5. The Auth0 API responds with requested data.
+
