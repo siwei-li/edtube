@@ -34,13 +34,9 @@
   - Change password
   - Upload channel avatar
 
-## Frontend Repo
-
-Frontend was developed with vue.js and ElementUI [EdTube](https://github.com/techreagan/vue-nodejs-youtube-clone)
-
 ## API Documentation
 
-Extensive and testing documentation with postman: [VueTube API](https://documenter.getpostman.com/view/9407876/SzYaVdtC?version=latest)
+Extensive and testing documentation with postman: [EdTube API (edtube-server.herokuapp.com)](https://edtube-server.herokuapp.com/api/v1/docs)
 
 ## Database Model
 
@@ -51,71 +47,21 @@ Extensive and testing documentation with postman: [VueTube API](https://document
 - Django
 - MySQL
 
-## Configuration File
+## Configuration of Environmental Variables
 
-Rename the config/.env.example to .env, then modify to your environment variables, mongodb uri, set your JWT_SECRET and SMTP variables
+TODO
 
 ```
-NODE_ENV=development
-PORT=3001
 
-MONGO_URI=YOUR_URL
-
-JWT_SECRET=YOUR_SECRET
-JWT_EXPIRE=30d
-JWT_COOKIE_EXPIRE=30
-
-FILE_UPLOAD_PATH = ./public/uploads
-MAX_FILE_UPLOAD = 1000000
-
-SMTP_HOST=smtp.mailtrap.io
-SMTP_PORT=2525
-SMTP_EMAIL=
-SMTP_PASSWORD=
-FROM_EMAIL=noreply@quizapp.com
-FROM_NAME=QuizzApp
 ```
-
-Email testing: use mailtrap for email testing, it's easy no stress.
 
 ## Installation
 
-Install all npm dependecies
+TODO
 
-```
-npm install
-```
+### Start web server
 
-Install nodemon globally
-
-```
-npm install -g nodemon
-```
-
-### Note
-
-Make sure you run the seeder to get categories in your database or Create a user with the role admin, then add category with the category endpoint.
-
-Run database seeder
-
-- Seeder folder is _data/
-- Edit the seeder file if you want to
-
-```
-node seeder -i
-```
-
-Delete all data
-
-```
-node seeder -d
-```
-
-## Start web server
-
-```
-node run dev
-```
+TODO
 
 ## Screenshots
 

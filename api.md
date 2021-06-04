@@ -1,2 +1,0 @@
-- `/api/profiles`: GET, POST, DELETE
-- `/api/profiles/:id`: GET, PUT, DELETE
