@@ -8,8 +8,8 @@
         </div>
 
         <div class="header-logo">
-          <img style="height: 50px" src="@/assets/apple-touch-icon.png">
-          <h2 style="margin: 0">EdTube</h2>
+          <img style="height: 50px;margin-right: 10px;margin-top: 5px" src="@/assets/apple-touch-icon.png">
+          <h2 style="margin-top: 3px">EdTube</h2>
         </div>
       </el-row>
 
@@ -67,8 +67,11 @@ export default {
 }
 
 .header-logo {
-  height: 60px;
+  width: 200px;
   margin-left: 15px;
+  justify-content: flex-start;
+  display: flex;
+  flex-wrap: nowrap;
 }
 
 .togl {

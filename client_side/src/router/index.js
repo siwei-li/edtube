@@ -31,6 +31,11 @@ const routes = [
     name: 'Watch',
     component: () => import(/* webpackChunkName: "watch" */ '../views/Watch.vue'),
   },
+  {
+    path: '/live',
+    name: 'Live',
+    component: () => import(/* webpackChunkName: "watch" */ '../views/Live.vue'),
+  },
 ]
 
 const router = new VueRouter({

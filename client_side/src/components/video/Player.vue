@@ -7,7 +7,7 @@
       </div>
 
       <vue-plyr ref="plyr">
-        <div data-plyr-provider="youtube" :data-plyr-embed-id=video.platform_id></div>
+        <div data-plyr-provider="youtube" :data-plyr-embed-id=video.platform_id :captions="{active: true, update: true, language: 'en'}"></div>
       </vue-plyr>
 
       <!--    <vue-plyr ref="plyr">-->
@@ -37,7 +37,7 @@
                          size="small"></el-button>
               <span>&nbsp;Save</span>
             </div>
-            <div>
+            <div style="margin-left: 10px">
               <span>Subscribe</span>
             </div>
           </div>
