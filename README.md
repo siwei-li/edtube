@@ -1,6 +1,6 @@
 # EdTube
 
-> A Vue.js + Django video streaming platform
+> A Vue.js + Django educational video streaming platform
 
 ![logo_200x200](https://i.loli.net/2020/12/23/jUCBcufs2H4bgZY.png)
 
